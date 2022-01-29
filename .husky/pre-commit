@@ -4,5 +4,7 @@
 . "$(dirname "$0")/_/husky.sh"
 . "$(dirname "$0")/common.sh"
 
-echo "Fixing any lint errors before commit!"
-yarn pre-commit
+echo "Fixing any lint errors in the frontend before commit!"
+cd frontend
+yarn lint-fix
+cd ..
