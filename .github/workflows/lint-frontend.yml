@@ -1,38 +1,27 @@
-name: Production Build
-
+name: Lint
 on: [push]
 
 jobs:
-  build:
+  run-linters:
+    name: Run Linters
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [16.x]
+    defaults:
+      run:
+        working-directory: frontend
 
     steps:
       - name: Checkout Git repo
         uses: actions/checkout@v2
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
-
       - name: Cache node_modules
         uses: actions/cache@v2
         with:
-          path: "**/node_modules"
+          path: '**/node_modules'
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-
-      - name: Go into frontend
-        run: cd frontend
 
       - name: Install dependencies
         run: yarn install
 
       - name: Run linters
         run: yarn lint
-
-        env:
-          CI: true
