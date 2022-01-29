@@ -22,11 +22,17 @@ jobs:
       - name: Cache node_modules
         uses: actions/cache@v2
         with:
-          path: '**/node_modules'
+          path: "**/node_modules"
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
 
-      - run: yarn install
+      - name: Go into frontend
+        run: cd frontend
 
-      - run: yarn build
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Run linters
+        run: yarn lint
+
         env:
           CI: true

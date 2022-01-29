@@ -16,6 +16,9 @@ jobs:
           path: '**/node_modules'
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
 
+      - name: Go into frontend
+        run: cd frontend
+
       - name: Install dependencies
         run: yarn install
 
