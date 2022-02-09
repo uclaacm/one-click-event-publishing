@@ -18,12 +18,12 @@ class NameForm extends React.Component<
   constructor(props: any) {
     super(props);
     this.state = {
-      Title: "",
-      sDate: "",
-      Description: "",
-      sTime: "",
-      eDate: "",
-      eTime: "",
+      Title: '',
+      sDate: '',
+      Description: '',
+      sTime: '',
+      eDate: '',
+      eTime: '',
     };
 
     this.handleChange = this.handleChange.bind(this);
