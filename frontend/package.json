@@ -4,7 +4,7 @@
     "start": "webpack serve --open --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
     "lint": "eslint \"**/*.tsx\" \"**/*.ts\" && npx stylelint \"**/*.css\" \"**/*.scss\" && prettier --check .",
-    "lint-fix": "eslint --fix \"z**/*.tsx\" \"**/*.ts\" && npx stylelint --fix \"**/*.css\" \"**/*.scss\" && prettier --write .",
+    "lint-fix": "eslint --fix \"**/*.tsx\" \"**/*.ts\" && npx stylelint --fix \"**/*.css\" \"**/*.scss\" && prettier --write .",
     "pre-commit": "yarn lint-fix || true"
   },
   "dependencies": {
