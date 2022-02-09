@@ -1,4 +1,3 @@
-/* eslint-disable indent */
 import React from 'react';
 import AppWrapper from './shared/AppWrapper';
 import { HeaderSections } from './shared/globalTypes';

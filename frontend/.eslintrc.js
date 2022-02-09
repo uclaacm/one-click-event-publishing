@@ -24,6 +24,7 @@ module.exports = {
   plugins: ['import', 'react', '@typescript-eslint'],
   rules: {
     // A few more opinions in addition to extensions
+    "indent": "off",
 
     // As per React 17 changes! https://reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html
     'react/react-in-jsx-scope': 'off',
