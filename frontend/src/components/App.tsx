@@ -4,8 +4,8 @@ import { HeaderSections } from './shared/globalTypes';
 
 import '../assets/WestwoodSans-Regular.ttf';
 
-class NameForm extends React.Component<any,{Title: string;sDate: string;Description: string;
-sTime: string;eDate: string;eTime: string;}
+class NameForm extends React.Component<any,{Title: string; sDate: string; Description: string;
+  sTime: string;eDate: string;eTime: string;}
 > {
   constructor(props: any) {
     super(props);
