@@ -25,5 +25,10 @@ def main(request):
 def signin(request):
     return HttpResponse('Signed in')
 
-def home(request):
+# @api_view(['POST'])
+
+def createEvent(request):
+    #request.n
     return HttpResponse('Event home')
+    #create seperate functions for other apis
+    #yarn lint
