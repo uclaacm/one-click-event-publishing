@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Login from './Login';
 import AppWrapper from './shared/AppWrapper';
 import { HeaderSections } from './shared/globalTypes';
 
@@ -92,6 +93,22 @@ class NameForm extends React.Component<
   }
 }
 function App(): JSX.Element {
+  const [token, setToken] = useState<{ access: string; refresh: string }>({
+    access: '',
+    refresh: '',
+  });
+
+  //console.log(token);
+  if (
+    token == null ||
+    !('access' in token) ||
+    !('refresh' in token) ||
+    token.access == '' ||
+    token.refresh == ''
+  ) {
+    return <Login setToken={setToken} />;
+  }
+
   return (
     <div>
       <AppWrapper section={HeaderSections.DEFAULT_SECTION}>
