@@ -128,6 +128,7 @@ SIMPLE_JWT = {
 }
 
 CORS_ALLOWED_ORIGINS = [
+# TODO: Change this to the frontend url for production
 "http://localhost:3000"
 ]
 
