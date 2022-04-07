@@ -96,16 +96,22 @@ function App(): JSX.Element {
     refresh: '',
   });
 
+  // Quick and dirty check to see if the user has a valid token
+  // More secure check should be done at the backend endpoints
   if (
     token == null ||
     !('access' in token) ||
     !('refresh' in token) ||
     token.access == '' ||
-    token.refresh == ''
+    token.refresh == '' ||
+    token.access == 'error' ||
+    token.refresh == 'error'
   ) {
+    // Login page
     return <Login setToken={setToken} />;
   }
 
+  // Event description page
   return (
     <div>
       <AppWrapper section={HeaderSections.DEFAULT_SECTION}>

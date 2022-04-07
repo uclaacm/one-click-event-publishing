@@ -16,6 +16,7 @@ async function loginUser(creds: {
     redirect: 'follow',
   };
 
+  // TODO: Replace this url with the real backend url for production
   return fetch('http://127.0.0.1:8000/api/token', requestOptions)
     .then((response) => response.json())
     .then((result) => {
@@ -24,7 +25,7 @@ async function loginUser(creds: {
     })
     .catch((_error) => {
       //console.log(_error);
-      return { access: '', refresh: '' };
+      return { access: 'error', refresh: 'error' };
     });
 }
 
