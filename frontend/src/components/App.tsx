@@ -1,101 +1,121 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Login from './Login';
 import AppWrapper from './shared/AppWrapper';
 import { HeaderSections } from './shared/globalTypes';
 
 import '../assets/WestwoodSans-Regular.ttf';
 
-class NameForm extends React.Component<
-  any,
-  {
-    Title: string;
-    sDate: string;
-    Description: string;
-    sTime: string;
-    eDate: string;
-    eTime: string;
-  }
-> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      Title: '',
-      sDate: '',
-      Description: '',
-      sTime: '',
-      eDate: '',
-      eTime: '',
-    };
+function NameForm(props: {
+  token: { access: string; refresh: string };
+}): JSX.Element {
+  const [title, setTitle] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [startTime, setStartTime] = useState('');
+  const [endTime, setEndTime] = useState('');
+  const [description, setDescription] = useState('');
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
 
-  handleChange(event: any) {
-    const name = event.target.name;
-    //very hacky way, idk how to use ES6 computed property
-    //name syntax to update the state key with typescript
-    if (name == 'sDate') {
-      this.setState({ sDate: event.target.value });
-    } else if (name == 'Title') {
-      this.setState({ Title: event.target.value });
-    } else if (name == 'Description') {
-      this.setState({ Description: event.target.value });
-    } else if (name == 'sTime') {
-      this.setState({ sTime: event.target.value });
-    } else if (name == 'eDate') {
-      this.setState({ eDate: event.target.value });
-    } else if (name == 'eTime') {
-      this.setState({ eTime: event.target.value });
-    }
-  }
+    // TODO: Send information to backend here!
+    /*
+    console.log('Title is ' + title);
+    console.log('Starting at ' + startDate + ', ' + startTime);
+    console.log('Ending at ' + endDate + ', ' + endTime);
+    console.log('Description is ' + description);
+    console.log(props.token);
+    */
+    alert('Title is ' + title);
+    alert('Starting at ' + startDate + ', ' + startTime);
+    alert('Ending at ' + endDate + ', ' + endTime);
+    alert('Description is ' + description);
+    alert(props.token);
+  };
 
-  handleSubmit(event: any) {
-    alert('Title is ' + this.state.Title);
-    alert('Starting At ' + this.state.sDate + ' ' + this.state.sTime);
-    alert('Description is ' + this.state.Description);
-
-    event.preventDefault();
-  }
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <label>
-          Title:
-          <input type="text" name="Title" onChange={this.handleChange} />
-        </label>
-        <br></br>
-        <label>
-          Start Date:
-          <input type="date" name="sDate" onChange={this.handleChange}></input>
-        </label>
-        <label>
-          Start Time:
-          <input type="time" name="sTime" onChange={this.handleChange}></input>
-        </label>
-        <label>
-          End Date:
-          <input type="date" name="eDate" onChange={this.handleChange}></input>
-        </label>
-        <label>
-          End Time:
-          <input type="time" name="eTime" onChange={this.handleChange}></input>
-        </label>
-
-        <br></br>
-        <label>
-          Event Description:
-          <input type="text" name="Description" onChange={this.handleChange} />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
-    );
-  }
+  return (
+    <form onSubmit={handleSubmit}>
+      <label>
+        Title:
+        <input
+          type="text"
+          name="Title"
+          onChange={(e) => setTitle(e.target.value)}
+        />
+      </label>
+      <br></br>
+      <label>
+        Start Date:
+        <input
+          type="date"
+          name="sDate"
+          onChange={(e) => setStartDate(e.target.value)}
+        />
+      </label>
+      <label>
+        Start Time:
+        <input
+          type="time"
+          name="sTime"
+          onChange={(e) => setStartTime(e.target.value)}
+        />
+      </label>
+      <label>
+        End Date:
+        <input
+          type="date"
+          name="eDate"
+          onChange={(e) => setEndDate(e.target.value)}
+        />
+      </label>
+      <label>
+        End Time:
+        <input
+          type="time"
+          name="eTime"
+          onChange={(e) => setEndTime(e.target.value)}
+        />
+      </label>
+      <br></br>
+      <label>
+        Event Description:
+        <input
+          type="text"
+          name="Description"
+          onChange={(e) => setDescription(e.target.value)}
+        />
+      </label>
+      <input type="submit" value="Submit" />
+    </form>
+  );
 }
+
 function App(): JSX.Element {
+  const [token, setToken] = useState<{ access: string; refresh: string }>({
+    access: '',
+    refresh: '',
+  });
+
+  // Quick and dirty check to see if the user has a valid token
+  // More secure check should be done at the backend endpoints
+  if (
+    token == null ||
+    !('access' in token) ||
+    !('refresh' in token) ||
+    token.access == '' ||
+    token.refresh == '' ||
+    token.access == 'error' ||
+    token.refresh == 'error'
+  ) {
+    // Login page
+    return <Login setToken={setToken} />;
+  }
+
+  // Event description page
   return (
     <div>
       <AppWrapper section={HeaderSections.DEFAULT_SECTION}>
-        <NameForm />
+        <NameForm token={token} />
       </AppWrapper>
     </div>
   );

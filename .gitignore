@@ -41,3 +41,9 @@ yarn-error.log*
 # Never commit environment variables
 .env
 credentials.json
+
+# Ignore pycache
+__pycache__/
+
+# Ignore database file
+db.sqlite3
