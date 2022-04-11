@@ -3,7 +3,6 @@ import Login from './Login';
 import AppWrapper from './shared/AppWrapper';
 import { HeaderSections } from './shared/globalTypes';
 
-import '../assets/WestwoodSans-Regular.ttf';
 
 function NameForm(props: {
   token: { access: string; refresh: string };
@@ -14,29 +13,53 @@ function NameForm(props: {
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
   const [description, setDescription] = useState('');
+  const [dataUri, setDataURI] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
 
+  function onFileSelected(event:any) {
+    var selectedFile = event.target.files[0];
+    var reader = new FileReader();
+  
+    var imgtag = document.getElementById("myFile") as HTMLImageElement;
+    imgtag.title = selectedFile.name;
+    reader.onload = function(event) {
+      imgtag.src = event.target!.result! as string;
+    };
+    reader.readAsDataURL(selectedFile);
+    setDataURI(imgtag.src);
+  }
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     // TODO: Send information to backend here!
-    /*
+    (async () => {
+      const rawResponse = await fetch('http://127.0.0.1:8000/api/create-event', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name: title, description: description, 
+          scheduled_start_time: startDate + ',' + startTime,
+           scheduled_end_time: endDate + ',' + endTime, image_data_uri:dataUri
+          })
+      });
+      const content = await rawResponse.json();
+
+      console.log(content);
+    })();
     console.log('Title is ' + title);
     console.log('Starting at ' + startDate + ', ' + startTime);
     console.log('Ending at ' + endDate + ', ' + endTime);
     console.log('Description is ' + description);
     console.log(props.token);
-    */
-    alert('Title is ' + title);
-    alert('Starting at ' + startDate + ', ' + startTime);
-    alert('Ending at ' + endDate + ', ' + endTime);
-    alert('Description is ' + description);
-    alert(props.token);
+
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <label>
-        Title:
+        Event Title:
         <input
           type="text"
           name="Title"
@@ -60,6 +83,7 @@ function NameForm(props: {
           onChange={(e) => setStartTime(e.target.value)}
         />
       </label>
+      <br></br>
       <label>
         End Date:
         <input
@@ -85,7 +109,13 @@ function NameForm(props: {
           onChange={(e) => setDescription(e.target.value)}
         />
       </label>
+      <br></br>
+      <label>
+        Relevant Images:
+      <input type="file" id="myFile" name="filename" onChange={(event)=>onFileSelected(event)}/>
+      </label>
       <input type="submit" value="Submit" />
+
     </form>
   );
 }
@@ -108,7 +138,7 @@ function App(): JSX.Element {
     token.refresh == 'error'
   ) {
     // Login page
-    return <Login setToken={setToken} />;
+      return <Login setToken={setToken} />;
   }
 
   // Event description page
