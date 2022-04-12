@@ -5,8 +5,8 @@ import os
 from dotenv import load_dotenv
 
 def create_discord_event(name, description, start_time, end_time, location, image):
-    acm_guild_id = ""
-    acm_bot_token = ""
+    acm_guild_id = os.getenv('ACM_GUILD_ID')
+    acm_bot_token = os.getenv('ACM_BOT_TOKEN')
     api_url = "https://discord.com/api/guilds/" + acm_guild_id + "/scheduled-events"
 
     data = {
@@ -17,7 +17,7 @@ def create_discord_event(name, description, start_time, end_time, location, imag
         'scheduled_end_time': end_time,
         'entity_type': '3',
         'entity_metadata': {'location': location},
-        #'image': image,
+        'image': image,
     }
 
     headers = {
