@@ -1,7 +1,7 @@
 from tracemalloc import start
 from django.shortcuts import render
 from django.http import HttpResponse
-from .utilities import create_discord_event
+from .utilities import create_discord_event, instagram_graph
 import json
 
 
@@ -26,7 +26,8 @@ def create_event(request):
     start_time = data['start_time']
     end_time = data['end_time']
     location = data['location']
-    image = data['image']
+    image_data_uri = data['image_data_uri']
+    image_location = data['image_location']
 
 
     create_discord_event(
@@ -35,7 +36,12 @@ def create_event(request):
         start_time = start_time,
         end_time = end_time,
         location = location,
-        image = image,
+        image = image_data_uri,
+    )
+
+    instagram_graph(
+        description=description,
+        image_location=image_location
     )
 
     return HttpResponse("hello")
