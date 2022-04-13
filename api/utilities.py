@@ -4,6 +4,8 @@ from django.http import HttpResponse
 import os
 from dotenv import load_dotenv
 
+load_dotenv()
+
 def create_discord_event(name, description, start_time, end_time, location, image):
     acm_guild_id = os.getenv('ACM_GUILD_ID')
     acm_bot_token = os.getenv('ACM_BOT_TOKEN')
@@ -30,17 +32,15 @@ def create_discord_event(name, description, start_time, end_time, location, imag
     return created_event
   
 
-def facebook_graph(request):
-    load_dotenv()
+def facebook_graph(description):
     access_token=os.getenv('ACCESS_TOKEN_FB')
     page=fb.GraphAPI(access_token)
     page_id= os.getenv('PAGE_ID')
-    page_message="Hello!"
+    page_message=description
     page.put_object(page_id,"feed",message=page_message)
     return HttpResponse("Successfully posted to facebook!")
 
-def instagram_graph(description, image_url):
-    load_dotenv()
+def instagram_graph(description, image_location):
     access_token = os.getenv('ACCESS_TOKEN_FB')
     
     main_url = "https://graph.facebook.com/v13.0/"
@@ -61,7 +61,7 @@ def instagram_graph(description, image_url):
 
     ## Creates a post on the ig page
     body = {
-    'image_url': image_url,
+    'image_url': image_location,
     'caption': description,
     }
     url = main_url + ig_page_id + "/media"
