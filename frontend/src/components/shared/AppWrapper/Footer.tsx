@@ -1,18 +1,18 @@
-import TeachLALogo from '../../../assets/teach-la-logo.svg';
+import BoardLogo from '../../../assets/acm_logo.svg';
 function Footer(): JSX.Element {
   return (
     <div id="footer">
       <h3>
-        made with ❤️ by{' '}
+        Brought to you by{' '}
         <a
-          href="https://teachla.uclaacm.com"
+          href="https://uclaacm.com/dev"
           target="_blank"
           rel="noopener noreferrer"
           id="footer-link"
         >
           {' '}
-          <img id="tla-logo" src={TeachLALogo} alt="teach la logo!" />
-          acm.teachLA
+          <img id="board-logo" src={BoardLogo} alt="board logo!" />
+          .dev
         </a>
       </h3>
     </div>

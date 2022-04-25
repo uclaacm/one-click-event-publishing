@@ -54,11 +54,11 @@ export default function Login({
       <h1>Please Log In</h1>
       <form onSubmit={handleSubmit}>
         <label>
-          <p>Username</p>
+          <p>Username:</p>
           <input type="text" onChange={(e) => setUserName(e.target.value)} />
         </label>
         <label>
-          <p>Password</p>
+          <p>Password:</p>
           <input
             type="password"
             onChange={(e) => setPassword(e.target.value)}
