@@ -6,14 +6,17 @@ $header-height: 6vh;
 //=======================================
 #app-wrapper {
   background-color: #b7ecf3;
-  margin: $header-height 0 $header-height 0;
-  min-height: calc(100vh - 2 * #{$header-height});
   display: flex;
   justify-content: center;
+  margin: $header-height 0 $header-height 0;
+  min-height: calc(100vh - 2 * #{$header-height});
 }
 
-p, button, input, textarea {
-  margin: 1vh 1vw 1vh 1vw;
+p,
+button,
+input,
+textarea {
+  margin: 1vh 1vw;
 }
 
 label {
@@ -28,8 +31,8 @@ label {
   background-color: white;
   //filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
   display: flex;
-  justify-content: center;
   height: $header-height;
+  justify-content: center;
   position: fixed;
   top: 0;
   width: 100%;

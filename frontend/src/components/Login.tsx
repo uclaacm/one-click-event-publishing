@@ -35,7 +35,7 @@ export default function Login({
   setToken: React.Dispatch<
     React.SetStateAction<{ access: string; refresh: string }>
   >;
-}) {
+}): JSX.Element {
   const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
 
