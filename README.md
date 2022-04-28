@@ -1,20 +1,22 @@
 # One Click Event Publishing!
 
-One click to publish events/posts on various social media platforms.
+## Overview
 
-# Developer tools:
+Internal tool for ACM -- one click to publish events on various social media platforms!
+
+## Preparing to run the project
+
+Install relevant developer tools
 * npm
 * git
-* python3 (for backend)
-* django (backend python framework)
-* react
-* Visual Studio Code (or code editor of choice)
+* python + Flask
+* React + Typescript
+* Code editor of choice (such as Visual Studio Code)
 
-# Preparing to run the project
-Install relevant developer tools
-* Install dependencies: Run `npm install`
+Install dependencies: `npm install`
 
-# Run the backend
+## Backend info
+
 Move into the backend folder with `cd backend`. Create a virtual environment if none made yet with `python3 -m venv venv`.
 
 Activate your virtual environment with `source venv/bin/activate` and deactivate it with `deactivate`.
@@ -25,43 +27,54 @@ Everytime you add a dependency, update the requirements.txt by running `pip free
 
 Create a .env file inside the backend folder with the appropriate SECRET_KEY and other environment variables.
 
-To apply migrations (changes) if prompted, run `python3 manage.py migrate` or `python manage.py migrate`
+To run the backend server use `python3 server_config.py` or `python server_config.py` -- it will run on localhost:8080.
 
-To run server use `python3 manage.py runserver` or `python manage.py runserver`
+## Frontend info
 
-# Run the frontend
-Install packages using
-* `yarn install`
-* `yarn prepare`
+Install dependencies using
+```
+yarn install
+yarn prepare
+```
 
-Then use `yarn start`
+Then use `yarn start` -- the frontend will run on localhost:3000.
 
 Other helpful commands for the frontend:
-* Build:
-    * `yarn run build`
-* Lint:
-    * `yarn lint`
-* Lint and fix:
-    * `yarn lint-fix`
+```
+yarn run build
+yarn lint
+yarn lint-fix
+```
 
-# Making a pull request
-Run ____ for formatting
+See the README in the frontend folder for more details!
 
-# Important Folders and Files
-## backend
-urls file: contains general routes
-## api
-* urls file: contains specific routes
-* utilities file: contains utility functions (ex. for posting to different social media)
-* views file: other functions
-## frontend
-src folder
+## Contribution Workflow
 
-# Routes:
-localhost:8000/api
+Thanks for your interest in contributing to one click event publishing! ❤️
+
+Here's a quick guide on how to get started.
+
+1. Either make a new branch or a fork of this repository. `main` is a protected branch, **so you cannot push to it**.
+2. Follow the instructions in "Development Setup" above. If you're on a fork, replace the URL with the fork's URL; if you're on a different branch, check it out using `git checkout`.
+3. Beep boop away!
+4. **Before you push**, make sure your app runs with `yarn start`. If there are any errors, our CI/CD service will **reject your build**.
+5. Once you're ready, stage and commit your changes!
+6. Make a [pull request](https://github.com/uclaacm/one-click-event-publishing/pulls) with your changes, and let someone on your project team know.
+    * Netlify has a neat feature called "Deploy Previews" that give you a link to preview your changes; [see the blog post](https://www.netlify.com/blog/2016/07/20/introducing-deploy-previews-in-netlify/) for more info!
+7. If your code passes code review, then we can **squash and merge** it into `main`. Congratulations! If you'd like, it's now safe to delete your branch/fork.
+
+## Important Folders and Files
+
+Backend
+* utilities.py: contains utility functions (ex. for posting to different social media)
+
+Frontend
+* src folder
+
+## Routes
+
+Frontend: localhost:8000/api
 Default route
 
 localhost:8000/api/post-facebook [Not for use]
 Makes a post to Facebook
-
-
