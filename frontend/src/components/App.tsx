@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Login from './Login';
 import AppWrapper from './shared/AppWrapper';
-import { HeaderSections } from './shared/globalTypes';
 
 import '../assets/WestwoodSans-Regular.ttf';
 
@@ -111,7 +110,7 @@ function App(): JSX.Element {
     // Login page
     return (
       <div>
-        <AppWrapper section={HeaderSections.DEFAULT_SECTION}>
+        <AppWrapper>
           <Login setToken={setToken} />
         </AppWrapper>
       </div>
@@ -121,7 +120,7 @@ function App(): JSX.Element {
   // Event description page
   return (
     <div>
-      <AppWrapper section={HeaderSections.DEFAULT_SECTION}>
+      <AppWrapper>
         <NameForm token={token} />
       </AppWrapper>
     </div>
