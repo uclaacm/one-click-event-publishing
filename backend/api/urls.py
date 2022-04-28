@@ -12,8 +12,8 @@ from rest_framework_simplejwt.views import (
 
 urlpatterns = [
     path('create-event',  create_event),
-    path('testAuthenticated', testJwt), # Endpoint with authentication
+    path('testAuthenticated', testJwt),  # Endpoint with authentication
     path('token', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh', TokenRefreshView.as_view(), name='token_refresh'),
-    path('post-facebook',facebook_graph)
+    path('post-facebook', facebook_graph)
 ]
