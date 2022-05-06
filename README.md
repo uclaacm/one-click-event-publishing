@@ -6,13 +6,9 @@ One click to publish events/posts on various social media platforms.
 npm
 git
 python3 (for backend)
-django (backend python framework)
+flask (backend python framework)
 react
 Visual Studio Code (or code editor of choice)
-
-# Preparing to run the project
-Install relevant developer tools
-Install dependencies: Run `npm install`
 
 # Run the backend
 Move into the backend folder with `cd backend`. Create a virtual environment if none made yet with `python3 -m venv venv`.
@@ -29,7 +25,9 @@ To apply migrations (changes) if prompted: Run `python3 manage.py migrate` or `p
 To run server: Run `python3 manage.py runserver` or `python manage.py runserver`
 
 # Run the frontend
-Run `npm start`
+`cd frontend` to go to our frontend folder
+`yarn` to install dependencies
+`yarn start` to start dev server
 
 # Making a pull request
 Run ____ for formatting
@@ -37,17 +35,11 @@ Run ____ for formatting
 # Important Folders and Files
 ## backend
 urls file: contains general routes
-## api
-urls file: contains specific routes
-utilities file: contains utility functions (ex. for posting to different social media)
-views file: other functions
+
 ## frontend
 src folder
 
 # Routes:
-[IP address]:PORT/api
-Default route
-[IP address]:PORT/api/post-facebook [Not for use]
-Makes a post to Facebook
+TODO:
 
 
