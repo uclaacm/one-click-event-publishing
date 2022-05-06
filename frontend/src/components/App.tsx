@@ -15,10 +15,10 @@ function NameForm(props: {
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
   const [description, setDescription] = useState('');
-//  const [dataUri, setDataURI] = useState('');
+  //  const [dataUri, setDataURI] = useState('');
 
-const [location,setLocation]= useState('');
-const [image,setImage]=useState('');
+  const [location, setLocation] = useState('');
+  const [image, setImage] = useState('');
 
   // function onFileSelected(event: React.ChangeEvent<HTMLInputElement>): void {
   //   const selectedFile = event.target.files![0];
@@ -31,25 +31,24 @@ const [image,setImage]=useState('');
   //   };
   //   reader.readAsDataURL(selectedFile);
   //   setDataURI(imgtag.src);
- 
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     // TODO: Send information to backend here!
 
-    console.log('Title is ' + title);
-    console.log('Starting at ' + startDate + ', ' + startTime);
-    console.log('Ending at ' + endDate + ', ' + endTime);
-    console.log('Description is ' + description);
-    console.log('Location is' + location);
-    console.log('Image is'+ image);
-    console.log(props.token);
+    alert('Title is ' + title);
+    alert('Starting at ' + startDate + ', ' + startTime);
+    alert('Ending at ' + endDate + ', ' + endTime);
+    alert('Description is ' + description);
+    alert('Location is' + location);
+    alert('Image is' + image);
+    alert(props.token);
   };
 
   return (
     <div className="event-wrapper">
       <h1>Enter Event Details</h1>
-
 
       <form onSubmit={handleSubmit}>
         <table>
@@ -186,8 +185,6 @@ const [image,setImage]=useState('');
   );
 }
 
-
-
 function App(): JSX.Element {
   const [token, setToken] = useState<{ access: string; refresh: string }>({
     access: '',
@@ -205,14 +202,14 @@ function App(): JSX.Element {
     token.access == 'error' ||
     token.refresh == 'error'
   ) {
-    // Login page
-    // return (
-    //   <div>
-    //     <AppWrapper section={HeaderSections.DEFAULT_SECTION} >
-    //       <Login setToken={setToken} />
-    //     </AppWrapper>
-    //   </div>
-    // );
+    //  Login page
+    return (
+      <div>
+        <AppWrapper section={HeaderSections.DEFAULT_SECTION}>
+          <Login setToken={setToken} />
+        </AppWrapper>
+      </div>
+    );
   }
 
   // Event description page
@@ -223,6 +220,6 @@ function App(): JSX.Element {
       </AppWrapper>
     </div>
   );
-} 
+}
 
 export default App;
