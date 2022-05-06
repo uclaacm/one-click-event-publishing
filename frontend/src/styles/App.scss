@@ -1,0 +1,18 @@
+.table-row{
+    display: flex;           display: -webkit-flex;
+    flex-direction: row;     -webkit-flex-direction: row;
+    flex-grow: 0;            -webkit-flex-grow: 0;
+    flex-wrap: wrap;         -webkit-flex-wrap: wrap;
+    width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+table, td, th {  
+ //  border: 1px solid #ddd;
+}
+table{
+    margin:0 auto;
+}
+label{
+    float:right;
+}

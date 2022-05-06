@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import Login from './Login';
 import AppWrapper from './shared/AppWrapper';
+import '../styles/App.scss';
+
+import '../assets/WestwoodSans-Regular.ttf';
 import { HeaderSections } from './shared/globalTypes';
 
 function NameForm(props: {
@@ -12,121 +15,178 @@ function NameForm(props: {
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
   const [description, setDescription] = useState('');
-  const [dataUri, setDataURI] = useState('');
+//  const [dataUri, setDataURI] = useState('');
 
-  function onFileSelected(event: React.ChangeEvent<HTMLInputElement>): void {
-    const selectedFile = event.target.files![0];
-    const reader = new FileReader();
+const [location,setLocation]= useState('');
+const [image,setImage]=useState('');
 
-    const imgtag = document.getElementById('myFile') as HTMLImageElement;
-    imgtag.title = selectedFile.name;
-    reader.onload = function (e) {
-      imgtag.src = e.target!.result! as string;
-    };
-    reader.readAsDataURL(selectedFile);
-    setDataURI(imgtag.src);
-  }
+  // function onFileSelected(event: React.ChangeEvent<HTMLInputElement>): void {
+  //   const selectedFile = event.target.files![0];
+  //   const reader = new FileReader();
+
+  //   const imgtag = document.getElementById('myFile') as HTMLImageElement;
+  //   imgtag.title = selectedFile.name;
+  //   reader.onload = function (e) {
+  //     imgtag.src = e.target!.result! as string;
+  //   };
+  //   reader.readAsDataURL(selectedFile);
+  //   setDataURI(imgtag.src);
+ 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     // TODO: Send information to backend here!
-    async () => {
-      const rawResponse = await fetch(
-        'http://127.0.0.1:8000/api/create-event',
-        {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            name: title,
-            description: description,
-            scheduled_start_time: startDate + ',' + startTime,
-            scheduled_end_time: endDate + ',' + endTime,
-            image_data_uri: dataUri,
-          }),
-        }
-      ).catch();
-      //TODO: change this, really bad eslint workaround
-      if (rawResponse && props) {
-        //        console.log();
-      }
-    };
-    // console.log('Title is ' + title);
-    // console.log('Starting at ' + startDate + ', ' + startTime);
-    // console.log('Ending at ' + endDate + ', ' + endTime);
-    // console.log('Description is ' + description);
-    //  console.log(props.token);
+
+    console.log('Title is ' + title);
+    console.log('Starting at ' + startDate + ', ' + startTime);
+    console.log('Ending at ' + endDate + ', ' + endTime);
+    console.log('Description is ' + description);
+    console.log('Location is' + location);
+    console.log('Image is'+ image);
+    console.log(props.token);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Event Title:
-        <input
-          type="text"
-          name="Title"
-          onChange={(e) => setTitle(e.target.value)}
-        />
-      </label>
-      <br></br>
-      <label>
-        Start Date:
-        <input
-          type="date"
-          name="sDate"
-          onChange={(e) => setStartDate(e.target.value)}
-        />
-      </label>
-      <label>
-        Start Time:
-        <input
-          type="time"
-          name="sTime"
-          onChange={(e) => setStartTime(e.target.value)}
-        />
-      </label>
-      <br></br>
-      <label>
-        End Date:
-        <input
-          type="date"
-          name="eDate"
-          onChange={(e) => setEndDate(e.target.value)}
-        />
-      </label>
-      <label>
-        End Time:
-        <input
-          type="time"
-          name="eTime"
-          onChange={(e) => setEndTime(e.target.value)}
-        />
-      </label>
-      <br></br>
-      <label>
-        Event Description:
-        <input
-          type="text"
-          name="Description"
-          onChange={(e) => setDescription(e.target.value)}
-        />
-      </label>
-      <br></br>
-      <label>
-        Relevant Images:
-        <input
-          type="file"
-          id="myFile"
-          name="filename"
-          onChange={(event) => onFileSelected(event)}
-        />
-      </label>
-      <input type="submit" value="Submit" />
-    </form>
+    <div className="event-wrapper">
+      <h1>Enter Event Details</h1>
+
+
+      <form onSubmit={handleSubmit}>
+        <table>
+          <tr>
+            <td>
+              <label htmlFor="Title">
+                <p>Title:</p>
+              </label>
+            </td>
+            <td>
+              <input
+                type="text"
+                name="Title"
+                id="Title"
+                onChange={(e) => setTitle(e.target.value)}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label htmlFor="sDate">
+                <p>Start Date:</p>
+              </label>
+            </td>
+            <td>
+              <input
+                type="date"
+                name="sDate"
+                id="sDate"
+                onChange={(e) => setStartDate(e.target.value)}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label htmlFor="sTime">
+                <p>Start Time:</p>
+              </label>
+            </td>
+            <td>
+              <input
+                type="time"
+                name="sTime"
+                id="sTime"
+                onChange={(e) => setStartTime(e.target.value)}
+              />
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <label htmlFor="eDate">
+                <p>End Date:</p>
+              </label>
+            </td>
+            <td>
+              <input
+                type="date"
+                name="eDate"
+                id="eDate"
+                onChange={(e) => setEndDate(e.target.value)}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label htmlFor="eTime">
+                <p>End Time:</p>
+              </label>
+            </td>
+            <td>
+              <input
+                type="time"
+                name="eTime"
+                id="eTime"
+                onChange={(e) => setEndTime(e.target.value)}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label htmlFor="Description">
+                <p>Event Description:</p>
+              </label>
+            </td>
+            <td>
+              <textarea
+                name="Description"
+                id="Description"
+                onChange={(e) => setDescription(e.target.value)}
+                rows={5}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label htmlFor="Location">
+                <p>Location:</p>
+              </label>
+            </td>
+            <td>
+              <input
+                type="text"
+                name="Location"
+                id="Location"
+                onChange={(e) => setLocation(e.target.value)}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label htmlFor="Image">
+                <p>Revelant Image:</p>
+              </label>
+            </td>
+            <td>
+              <input
+                type="file"
+                name="Image"
+                id="Image"
+                onChange={(e) => setImage(e.target.value)}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td />
+            <td>
+              <input type="submit" value="Submit" />
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
   );
 }
+
+
 
 function App(): JSX.Element {
   const [token, setToken] = useState<{ access: string; refresh: string }>({
@@ -146,7 +206,13 @@ function App(): JSX.Element {
     token.refresh == 'error'
   ) {
     // Login page
-    return <Login setToken={setToken} />;
+    // return (
+    //   <div>
+    //     <AppWrapper section={HeaderSections.DEFAULT_SECTION} >
+    //       <Login setToken={setToken} />
+    //     </AppWrapper>
+    //   </div>
+    // );
   }
 
   // Event description page
@@ -157,6 +223,6 @@ function App(): JSX.Element {
       </AppWrapper>
     </div>
   );
-}
+} 
 
 export default App;
