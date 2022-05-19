@@ -1,0 +1,20 @@
+.table-row {
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex-grow: 0;
+  flex-grow: 0;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+  padding-left: 15px;
+  padding-right: 15px;
+  width: 100%;
+}
+
+table {
+  margin: 0 auto;
+}
+
+label {
+  float: right;
+}
