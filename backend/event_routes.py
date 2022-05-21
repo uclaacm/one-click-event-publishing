@@ -2,10 +2,12 @@
 from route_config import *
 from flask import Flask, request, make_response
 import json
+from auth_routes import auth_required
 from utilities import create_discord_event
 
 
 @app.route("/create-event", methods=['POST'])
+@auth_required
 def create_event():
     if request.is_json:
         try:
