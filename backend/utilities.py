@@ -1,16 +1,16 @@
 from requests import get, post, exceptions
-# import facebook as fb
-# from django.http import HttpResponse
+#import facebook as fb
 import os
 from dotenv import load_dotenv
 
 
 def create_discord_event(name, description, start_time, end_time, location, image):
+    load_dotenv()
 
     acm_guild_id = os.getenv('ACM_GUILD_ID')
     acm_bot_token = os.getenv('ACM_BOT_TOKEN')
 
-    # check if os environ variables properly set
+    # Check if os environ variables properly set
     if acm_guild_id is None:
         raise SystemError('Guild ID')
     if acm_bot_token is None:
@@ -32,7 +32,8 @@ def create_discord_event(name, description, start_time, end_time, location, imag
         'Authorization': 'Bot %s' % (acm_bot_token),
         'Content-Type': 'application/json',
     }
-    # handle discord api errors
+
+    # Handle discord api errors
     try:
         created_event = post(api_url, json=data, headers=headers).json()
     except exceptions.RequestException as e:  # This is the correct syntax
@@ -51,41 +52,45 @@ def create_discord_event(name, description, start_time, end_time, location, imag
 #     return HttpResponse("Successfully posted to facebook!")
 
 
-# def instagram_graph(description, image_url):
-#     load_dotenv()
-#     access_token = os.getenv('ACCESS_TOKEN_FB')
+def instagram_graph(description, image_url):
+    load_dotenv()
 
-#     main_url = "https://graph.facebook.com/v13.0/"
-#     headers = {
-#         "Authorization": "Bearer " + access_token
-#     }
+    access_token = os.getenv('ACCESS_TOKEN_FB')
 
-#     # Gets the facebook id of the user's page using the access token
-#     url = main_url + "me/accounts"
-#     response = get(url, headers=headers).json()
-#     fb_page_id = response['data'][0]['id']
+    # Check if os environ variable properly set
+    if access_token is None:
+        raise SystemError('Instagram Token')
 
-#     # With the facebook id of the page, gets the instagram page and its id linked to the facebook page
-#     url = main_url + fb_page_id + \
-#         "?fields=instagram_business_account&access_token=" + access_token
-#     response = get(url).json()
-#     ig_page_id = response['instagram_business_account']['id']
+    main_url = "https://graph.facebook.com/v13.0/"
+    headers = {
+        "Authorization": "Bearer " + access_token
+    }
 
-#     # Creates a post on the ig page
-#     body = {
-#         'image_url': image_url,
-#         'caption': description,
-#     }
-#     url = main_url + ig_page_id + "/media"
-#     response = post(url, headers=headers, json=body).json()
-#     creation_id = response['id']
+    # Gets the facebook id of the user's page using the access token
+    url = main_url + "me/accounts"
+    response = get(url, headers=headers).json()
+    fb_page_id = response['data'][0]['id']
 
-#     # Publishes the created post
+    # With the facebook id of the page, gets the instagram page and its id linked to the facebook page
+    url = main_url + fb_page_id + \
+        "?fields=instagram_business_account&access_token=" + access_token
+    response = get(url).json()
+    ig_page_id = response['instagram_business_account']['id']
 
-#     body = {
-#         "creation_id": creation_id
-#     }
-#     url = main_url + ig_page_id + "/media_publish"
-#     response = post(url, headers=headers, json=body).json()
+    # Creates a post on the ig page
+    body = {
+        'image_url': image_url,
+        'caption': description,
+    }
+    url = main_url + ig_page_id + "/media"
+    response = post(url, headers=headers, json=body).json()
+    creation_id = response['id']
 
-#     return HttpResponse("Successfully posted to facebook!")
+    # Publishes the created post
+    body = {
+        "creation_id": creation_id
+    }
+    url = main_url + ig_page_id + "/media_publish"
+    response = post(url, headers=headers, json=body).json()
+
+    return response
