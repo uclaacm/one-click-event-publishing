@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Login from './Login';
 import AppWrapper from './shared/AppWrapper';
 
 import '../assets/WestwoodSans-Regular.ttf';
 
-function NameForm(props: {
-  token: { access: string; refresh: string };
-}): JSX.Element {
+function NameForm(props: { token: string }): JSX.Element {
   const [title, setTitle] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
@@ -91,37 +89,51 @@ function NameForm(props: {
 }
 
 function App(): JSX.Element {
-  const [token, setToken] = useState<{ access: string; refresh: string }>({
-    access: '',
-    refresh: '',
-  });
+  const [token, setToken] = useState('');
+  useEffect(() => {
+    async function attemptLocalLogin() {
+      const localToken = localStorage.getItem('auth-token');
+      if (!localToken) return;
+      if (!(await authorizeToken(localToken))) {
+        setToken('');
+        return;
+      } else setToken(localToken);
+    }
+    attemptLocalLogin().catch(() => alert('broken'));
+  }, []);
 
-  // Quick and dirty check to see if the user has a valid token
-  // More secure check should be done at the backend endpoints
-  if (
-    token == null ||
-    !('access' in token) ||
-    !('refresh' in token) ||
-    token.access == '' ||
-    token.refresh == '' ||
-    token.access == 'error' ||
-    token.refresh == 'error'
-  ) {
-    // Login page
-    return (
-      <div>
-        <AppWrapper>
-          <Login setToken={setToken} />
-        </AppWrapper>
-      </div>
+  // /authorize-token
+
+  async function authorizeToken(atoken: string) {
+    //console.log(token);
+    if (!atoken) return false;
+    const res = await fetch(
+      'https://acm-one-click-event-publishing.herokuapp.com/authorize-token',
+      {
+        method: 'POST',
+        headers: {
+          'auth-token': atoken,
+        },
+      }
     );
+    if (res.status >= 400) {
+      //console.log('Not authorized!');
+      alert('Not authorized!');
+      localStorage.removeItem('auth-token');
+      return false;
+    }
+    if (res.status == 200) {
+      //console.log('token okay!');
+      return true;
+    }
+    return false;
   }
 
   // Event description page
   return (
     <div>
       <AppWrapper>
-        <NameForm token={token} />
+        {token ? <NameForm token={token} /> : <Login setToken={setToken} />}
       </AppWrapper>
     </div>
   );
