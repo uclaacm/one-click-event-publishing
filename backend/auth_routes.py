@@ -19,13 +19,13 @@ def auth_required(f):
         if 'auth-token' in request.headers:
             auth_token = request.headers['auth-token']
             if not auth_token:
-                return make_response(jsonify({'message': 'authorization required for this request'}, 401))
+                return make_response(jsonify({'message': 'authorization required for this request'}), 401)
             try:
                 # get env variables & check if they're there
                 jwt_salt = os.getenv('JWT_SALT')
                 jwt_secret = os.getenv("JWT_SECRET")
                 if jwt_salt is None or jwt_secret is None:
-                    return make_response(jsonify({'message': 'missing env variable'}, 500))
+                    return make_response(jsonify({'message': 'missing env variable'}), 500)
 
                 # try to decode the jwt token
                 jwt_data = jwt.decode(auth_token, jwt_salt, algorithms=["HS256"])
@@ -34,20 +34,20 @@ def auth_required(f):
                 try:
                     if jwt_data['secret'] != jwt_secret:
                         print(jwt_data['secret'])
-                        return make_response(jsonify({'message': 'invalid jwt token'}, 403))
+                        return make_response(jsonify({'message': 'invalid jwt token'}), 403)
                 except:
                     # secret missing
-                    return make_response(jsonify({'message': 'jwt token is malformed: missing secret'}, 400))
+                    return make_response(jsonify({'message': 'jwt token is malformed: missing secret'}), 400)
                 print('authenticated!')
             except jwt.ExpiredSignatureError:
                 # jwt token decode: expired token
-                return make_response(jsonify({'message': 'jwt token expired, must reauthenticate'}, 406))
+                return make_response(jsonify({'message': 'jwt token expired, must reauthenticate'}), 406)
             except jwt.InvalidTokenError:
                 # jwt token decode: invalid token
-                return make_response(jsonify({'message': 'invalid jwt token, reauthenticate'}, 406))
+                return make_response(jsonify({'message': 'invalid jwt token, reauthenticate'}), 406)
         else:
             # no auth-token in header
-            return make_response(jsonify({'message': 'missing auth token'}, 401))
+            return make_response(jsonify({'message': 'missing auth token'}), 401)
         return f(*args, **kwargs)
     return decorator
 
@@ -67,7 +67,7 @@ def check_password():
         jwt_secret = os.getenv("JWT_SECRET")
         jwt_salt = os.getenv("JWT_SALT")
         if jwt_salt is None or jwt_secret is None:
-            return make_response(jsonify({'message': 'missing env variable'}, 500))
+            return make_response(jsonify({'message': 'missing env variable'}), 500)
         
         jwt_token = jwt.encode({
             'secret': jwt_secret,
@@ -84,13 +84,13 @@ def authorize_token():
     if 'auth-token' in request.headers:
         auth_token = request.headers['auth-token']
         if not auth_token:
-            return make_response(jsonify({'message': 'authorization token required for this request'}, 401))
+            return make_response(jsonify({'message': 'authorization token required for this request'}), 401)
         try:
             # get env variables & check if they're there
             jwt_salt = os.getenv('JWT_SALT')
             jwt_secret = os.getenv("JWT_SECRET")
             if jwt_salt is None or jwt_secret is None:
-                return make_response(jsonify({'message': 'missing env variable'}, 500))
+                return make_response(jsonify({'message': 'missing env variable'}), 500)
 
             # try to decode the jwt token
             jwt_data = jwt.decode(auth_token, jwt_salt, algorithms=["HS256"])
@@ -98,18 +98,18 @@ def authorize_token():
             # check if the token secret matches the one from .env
             try:
                 if jwt_data['secret'] != jwt_secret:
-                    return make_response(jsonify({'message': 'invalid jwt token'}, 403))
+                    return make_response(jsonify({'message': 'invalid jwt token'}), 403)
             except:
                 # secret missing
-                return make_response(jsonify({'message': 'jwt token is malformed: missing secret'}, 400))
+                return make_response(jsonify({'message': 'jwt token is malformed: missing secret'}), 400)
         except jwt.ExpiredSignatureError:
             # jwt token decode: expired toke
-            return make_response(jsonify({'message': 'jwt token expired, must reauthenticate'}, 406))
+            return make_response(jsonify({'message': 'jwt token expired, must reauthenticate'}), 406)
         except jwt.InvalidTokenError:
             # jwt token decode: invalid token
-            return make_response(jsonify({'message': 'invalid jwt token, reauthenticate'}, 406))
+            return make_response(jsonify({'message': 'invalid jwt token, reauthenticate'}), 406)
     else:
         # no auth-token in header
-        return make_response(jsonify({'message': 'missing auth token'}, 401))
+        return make_response(jsonify({'message': 'missing auth token'}), 401)
     
-    return make_response(jsonify({'message': 'valid jwt token'}, 200))
+    return make_response(jsonify({'message': 'valid jwt token'}), 200)
