@@ -1,62 +1,57 @@
-import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import 'babel-polyfill';
+import { encode } from "base-64";
+
+interface LoginObj {
+  token: string
+}
 
 async function loginUser(creds: {
-  username: string;
   password: string;
-}): Promise<{ access: string; refresh: string }> {
-  const formdata = new FormData();
-  formdata.append('username', creds.username);
-  formdata.append('password', creds.password);
-
+}) {
   const requestOptions: RequestInit = {
     method: 'POST',
-    body: formdata,
-    redirect: 'follow',
+    headers: {
+      Authorization: "Basic " + encode(":" + creds.password)
+    },
   };
 
   // TODO: Replace this url with the real backend url for production
-  return fetch('http://127.0.0.1:8000/api/token', requestOptions)
-    .then((response) => response.json())
-    .then((result) => {
-      //console.log(result);
-      return result;
-    })
-    .catch((_error) => {
-      //console.log(_error);
-      return { access: 'error', refresh: 'error' };
-    });
+  console.log("Basic " + encode(creds.password));
+  const res = await fetch('https://acm-one-click-event-publishing.herokuapp.com/authenticate', requestOptions);
+  if (res.status >= 400) {
+    console.log("Error signing in!");
+    alert("Invalid password");
+    return "";
+  }
+  const resData: LoginObj = await res.json();
+  return resData.token;
+
+}
+
+interface LoginProps {
+  setToken: React.Dispatch<React.SetStateAction<string>>
 }
 
 export default function Login({
   setToken,
-}: {
-  setToken: React.Dispatch<
-    React.SetStateAction<{ access: string; refresh: string }>
-  >;
-}) {
-  const [username, setUserName] = useState('');
+}: LoginProps) {
   const [password, setPassword] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const token = await loginUser({
-      username,
       password,
     });
     //console.log(token);
     setToken(token);
+    localStorage.setItem('auth-token', token)
   };
 
   return (
     <div className="login-wrapper">
       <h1>Please Log In</h1>
       <form onSubmit={handleSubmit}>
-        <label>
-          <p>Username</p>
-          <input type="text" onChange={(e) => setUserName(e.target.value)} />
-        </label>
         <label>
           <p>Password</p>
           <input
@@ -71,7 +66,3 @@ export default function Login({
     </div>
   );
 }
-
-Login.propTypes = {
-  setToken: PropTypes.func.isRequired,
-};
