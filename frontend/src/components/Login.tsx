@@ -1,41 +1,39 @@
+import { encode } from 'base-64';
 import React, { useState } from 'react';
 import 'babel-polyfill';
-import { encode } from "base-64";
 
 interface LoginObj {
-  token: string
+  token: string;
 }
 
-async function loginUser(creds: {
-  password: string;
-}) {
+async function loginUser(creds: { password: string }) {
   const requestOptions: RequestInit = {
     method: 'POST',
     headers: {
-      Authorization: "Basic " + encode(":" + creds.password)
+      Authorization: 'Basic ' + encode(':' + creds.password),
     },
   };
 
   // TODO: Replace this url with the real backend url for production
-  console.log("Basic " + encode(creds.password));
-  const res = await fetch('https://acm-one-click-event-publishing.herokuapp.com/authenticate', requestOptions);
+  //console.log('Basic ' + encode(creds.password));
+  const res = await fetch(
+    'https://acm-one-click-event-publishing.herokuapp.com/authenticate',
+    requestOptions
+  );
   if (res.status >= 400) {
-    console.log("Error signing in!");
-    alert("Invalid password");
-    return "";
+    //console.log('Error signing in!');
+    alert('Invalid password');
+    return '';
   }
   const resData: LoginObj = await res.json();
   return resData.token;
-
 }
 
 interface LoginProps {
-  setToken: React.Dispatch<React.SetStateAction<string>>
+  setToken: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export default function Login({
-  setToken,
-}: LoginProps) {
+export default function Login({ setToken }: LoginProps) {
   const [password, setPassword] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -45,7 +43,7 @@ export default function Login({
     });
     //console.log(token);
     setToken(token);
-    localStorage.setItem('auth-token', token)
+    localStorage.setItem('auth-token', token);
   };
 
   return (

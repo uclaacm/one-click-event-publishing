@@ -4,10 +4,7 @@ import AppWrapper from './shared/AppWrapper';
 
 import '../assets/WestwoodSans-Regular.ttf';
 
-
-function NameForm(props: {
-  token: string;
-}): JSX.Element {
+function NameForm(props: { token: string }): JSX.Element {
   const [title, setTitle] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
@@ -92,42 +89,41 @@ function NameForm(props: {
 }
 
 function App(): JSX.Element {
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState('');
   useEffect(() => {
     async function attemptLocalLogin() {
       const localToken = localStorage.getItem('auth-token');
-      if (!localToken)
-        return
+      if (!localToken) return;
       if (!(await authorizeToken(localToken))) {
-        setToken("");
+        setToken('');
         return;
-      }
-      else
-        setToken(localToken);
+      } else setToken(localToken);
     }
-    attemptLocalLogin();
-  }, [])
+    attemptLocalLogin().catch(() => alert('broken'));
+  }, []);
 
   // /authorize-token
 
-  async function authorizeToken(token: string) {
-    console.log(token);
-    if (!token)
-      return false;
-    const res = await fetch('https://acm-one-click-event-publishing.herokuapp.com/authorize-token', {
-      method: "POST",
-      headers: {
-        'auth-token': token
+  async function authorizeToken(atoken: string) {
+    //console.log(token);
+    if (!atoken) return false;
+    const res = await fetch(
+      'https://acm-one-click-event-publishing.herokuapp.com/authorize-token',
+      {
+        method: 'POST',
+        headers: {
+          'auth-token': atoken,
+        },
       }
-    })
+    );
     if (res.status >= 400) {
-      console.log('Not authorized!');
+      //console.log('Not authorized!');
       alert('Not authorized!');
-      localStorage.removeItem('auth-token')
+      localStorage.removeItem('auth-token');
       return false;
     }
     if (res.status == 200) {
-      console.log('token okay!')
+      //console.log('token okay!');
       return true;
     }
     return false;
@@ -137,9 +133,7 @@ function App(): JSX.Element {
   return (
     <div>
       <AppWrapper>
-        {
-          token ? <NameForm token={token} /> : <Login setToken={setToken} />
-        }
+        {token ? <NameForm token={token} /> : <Login setToken={setToken} />}
       </AppWrapper>
     </div>
   );
