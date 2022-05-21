@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Login from './Login';
 import AppWrapper from './shared/AppWrapper';
-import { HeaderSections } from './shared/globalTypes';
 
 import '../assets/WestwoodSans-Regular.ttf';
 
@@ -34,59 +33,60 @@ function NameForm(props: {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Title:
-        <input
-          type="text"
-          name="Title"
-          onChange={(e) => setTitle(e.target.value)}
-        />
-      </label>
-      <br></br>
-      <label>
-        Start Date:
-        <input
-          type="date"
-          name="sDate"
-          onChange={(e) => setStartDate(e.target.value)}
-        />
-      </label>
-      <label>
-        Start Time:
-        <input
-          type="time"
-          name="sTime"
-          onChange={(e) => setStartTime(e.target.value)}
-        />
-      </label>
-      <label>
-        End Date:
-        <input
-          type="date"
-          name="eDate"
-          onChange={(e) => setEndDate(e.target.value)}
-        />
-      </label>
-      <label>
-        End Time:
-        <input
-          type="time"
-          name="eTime"
-          onChange={(e) => setEndTime(e.target.value)}
-        />
-      </label>
-      <br></br>
-      <label>
-        Event Description:
-        <input
-          type="text"
-          name="Description"
-          onChange={(e) => setDescription(e.target.value)}
-        />
-      </label>
-      <input type="submit" value="Submit" />
-    </form>
+    <div className="event-wrapper">
+      <h1>Enter Event Details</h1>
+      <form onSubmit={handleSubmit}>
+        <label>
+          <p>Title:</p>
+          <input
+            type="text"
+            name="Title"
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </label>
+        <label>
+          <p>Start Date:</p>
+          <input
+            type="date"
+            name="sDate"
+            onChange={(e) => setStartDate(e.target.value)}
+          />
+        </label>
+        <label>
+          <p>Start Time:</p>
+          <input
+            type="time"
+            name="sTime"
+            onChange={(e) => setStartTime(e.target.value)}
+          />
+        </label>
+        <label>
+          <p>End Date:</p>
+          <input
+            type="date"
+            name="eDate"
+            onChange={(e) => setEndDate(e.target.value)}
+          />
+        </label>
+        <label>
+          <p>End Time:</p>
+          <input
+            type="time"
+            name="eTime"
+            onChange={(e) => setEndTime(e.target.value)}
+          />
+        </label>
+        <label>
+          <p>Event Description:</p>
+          <textarea
+            name="Description"
+            onChange={(e) => setDescription(e.target.value)}
+            rows={5}
+          />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
   );
 }
 
@@ -108,13 +108,19 @@ function App(): JSX.Element {
     token.refresh == 'error'
   ) {
     // Login page
-    return <Login setToken={setToken} />;
+    return (
+      <div>
+        <AppWrapper>
+          <Login setToken={setToken} />
+        </AppWrapper>
+      </div>
+    );
   }
 
   // Event description page
   return (
     <div>
-      <AppWrapper section={HeaderSections.DEFAULT_SECTION}>
+      <AppWrapper>
         <NameForm token={token} />
       </AppWrapper>
     </div>
