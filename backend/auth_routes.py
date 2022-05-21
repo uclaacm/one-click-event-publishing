@@ -25,7 +25,7 @@ def auth_required(f):
                 jwt_salt = os.getenv('JWT_SALT')
                 jwt_secret = os.getenv("JWT_SECRET")
                 if jwt_salt is None or jwt_secret is None:
-                    return make_response(jsonify({'message': 'missing env variable'}, 404))
+                    return make_response(jsonify({'message': 'missing env variable'}, 500))
 
                 # try to decode the jwt token
                 jwt_data = jwt.decode(auth_token, jwt_salt, algorithms=["HS256"])
@@ -67,7 +67,7 @@ def check_password():
         jwt_secret = os.getenv("JWT_SECRET")
         jwt_salt = os.getenv("JWT_SALT")
         if jwt_salt is None or jwt_secret is None:
-            return make_response(jsonify({'message': 'missing env variable'}, 404))
+            return make_response(jsonify({'message': 'missing env variable'}, 500))
         
         jwt_token = jwt.encode({
             'secret': jwt_secret,
@@ -90,7 +90,7 @@ def authorize_token():
             jwt_salt = os.getenv('JWT_SALT')
             jwt_secret = os.getenv("JWT_SECRET")
             if jwt_salt is None or jwt_secret is None:
-                return make_response(jsonify({'message': 'missing env variable'}, 404))
+                return make_response(jsonify({'message': 'missing env variable'}, 500))
 
             # try to decode the jwt token
             jwt_data = jwt.decode(auth_token, jwt_salt, algorithms=["HS256"])
