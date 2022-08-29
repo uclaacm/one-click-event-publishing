@@ -6,7 +6,7 @@ from utilities import create_discord_event, instagram_graph
 
 
 @app.route("/create-event", methods=['POST'])
-#@auth_required
+@auth_required
 def create_event():
     if request.is_json:
         try:

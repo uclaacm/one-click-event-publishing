@@ -12,8 +12,31 @@ function NameForm(props: { token: string }): JSX.Element {
   const [endTime, setEndTime] = useState('');
   const [description, setDescription] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const res = await fetch(
+      'http://10.0.0.83:8080/create-event',
+      {
+        method: 'POST',
+        headers: {
+          'auth-token': props.token,
+        },
+        body : JSON.stringify({
+          'name': title ,
+          'description':description,
+          'start_time':startTime,
+          'end_time':endTime,
+        })
+      }
+    );
+    if (res.status >= 400) {
+      alert(res.status)
+      alert('Unsuccessful!');
+    }
+    if (res.status == 200) {
+      alert('Posted event!');
+    }
 
     // TODO: Send information to backend here!
     /*
@@ -23,11 +46,11 @@ function NameForm(props: { token: string }): JSX.Element {
     console.log('Description is ' + description);
     console.log(props.token);
     */
-    alert('Title is ' + title);
-    alert('Starting at ' + startDate + ', ' + startTime);
-    alert('Ending at ' + endDate + ', ' + endTime);
-    alert('Description is ' + description);
-    alert(props.token);
+    // alert('Title is ' + title);
+    // alert('Starting at ' + startDate + ', ' + startTime);
+    // alert('Ending at ' + endDate + ', ' + endTime);
+    // alert('Description is ' + description);
+    // alert(props.token);
   };
 
   return (

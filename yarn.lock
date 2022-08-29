@@ -301,7 +301,7 @@
     "xdg-basedir" "^3.0.0"
 
 "connect@1.4.1":
-  "integrity" "sha1-F9mAeI58HN8RhdIbM8bZHeIEi0E="
+  "integrity" "sha1-F9mAeI58HN8RhdIbM8bZHeIEi0E= sha512-5MHCHvsWsPjOkH780R01gugAMZh9qerzTHUgTTPDI5mhaWoQJii+6UgfqpnPejg6VcjUEXw3pfLF1MHrIKFWDA=="
   "resolved" "https://registry.npmjs.org/connect/-/connect-1.4.1.tgz"
   "version" "1.4.1"
   dependencies:
