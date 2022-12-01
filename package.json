@@ -6,7 +6,7 @@
   "author": "Matthew Nieva <matthewcn56@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "husky": "^7.0.4"
+    "husky": "^8.0.2"
   },
   "scripts": {
     "prepare": "husky install"
